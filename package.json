@@ -1,0 +1,17 @@
+{
+  "name": "enmapi-component-repo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/enmapi/enmapi-component-repo.git",
+  "author": "phytertek <ryan.phytertek@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "enmapi": "^1.1.2",
+    "github": "^13.1.0"
+  }
+}
