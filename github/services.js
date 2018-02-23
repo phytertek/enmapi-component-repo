@@ -45,8 +45,9 @@ const createRepoWithCollaborator = async (name, username) => {
   }
 };
 const pushFilesToRepo = (repo_name, files) => {
-  fs.mkdirSync(`${cwd}/.temp/${repo_name}`);
+  fs.mkdirSync(`${cwd}/gitbin/${repo_name}`);
   const writeFiles = (path, files) => {
+    console.log('Writing files', path);
     const filesList = Object.keys(files);
     filesList.forEach(name => {
       if (typeof files[name] === 'string') {
@@ -57,14 +58,14 @@ const pushFilesToRepo = (repo_name, files) => {
       }
     });
   };
-  writeFiles(`${cwd}/.temp/${repo_name}`, files);
+  writeFiles(`${cwd}/gitbin/${repo_name}`, files);
   const git_init_commit = spawn(
-    `cd ${cwd}/.temp/${repo_name} && git init && git add . && git commit -m "Create repo commit"`,
+    `cd ${cwd}/gitbin/${repo_name} && git init && git add . && git commit -m "Create repo commit"`,
     { shell: true }
   );
   git_init_commit.on('close', () => {
     const push_to_repo = spawn(
-      `cd ${cwd}/.temp/${repo_name} && git remote add origin https://${
+      `cd ${cwd}/gitbin/${repo_name} && git remote add origin https://${
         env.GH_UN
       }:${
         env.GH_PW
@@ -72,7 +73,7 @@ const pushFilesToRepo = (repo_name, files) => {
       { shell: true }
     );
     push_to_repo.on('close', () => {
-      const clean_up = spawn(`cd ${cwd}/.temp && rm -rf ${repo_name}`, {
+      const clean_up = spawn(`cd ${cwd}/gitbin && rm -rf ${repo_name}`, {
         shell: true
       });
     });
